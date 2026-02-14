@@ -24,9 +24,6 @@ ENV/
 
 # CrewAI / project outputs (generated architecture reports)
 outputs/
-architecture.md
-report.md
-best_architectures.md
 
 # IDE and OS
 .idea/

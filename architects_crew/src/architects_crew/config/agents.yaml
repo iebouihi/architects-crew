@@ -31,7 +31,7 @@ gcp_architect:
     You're a seasoned GCP architect with a deep understanding of the GCP platform and its capabilities.
     You are known for your ability to design and implement GCP solutions that are efficient, secure, and scalable.
     You are a master of the GCP platform and its capabilities.
-  llm: openai/gpt-5-mini
+  llm: google/gemini-2.5-flash
 head_architect:
   role: >
     Head Architect

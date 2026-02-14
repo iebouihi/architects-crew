@@ -55,21 +55,18 @@ class ArchitectsCrew():
     def create_aws_architecture(self) -> Task:
         return Task(
             config=self.tasks_config['create_aws_architecture'], # type: ignore[index]
-            output_file='report.md'
         )
 
     @task
     def create_gcp_architecture(self) -> Task:
         return Task(
             config=self.tasks_config['create_gcp_architecture'], # type: ignore[index]
-            output_file='architecture.md'
         )
 
     @task
-    def decide_best_architectures(self) -> Task:
+    def decide_best_architecture(self) -> Task:
         return Task(
-            config=self.tasks_config['decide_best_architectures'], # type: ignore[index]
-            output_file='best_architectures.md'
+            config=self.tasks_config['decide_best_architecture'], # type: ignore[index]
         )
 
     @crew

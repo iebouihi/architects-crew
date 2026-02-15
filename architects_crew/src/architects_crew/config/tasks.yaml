@@ -3,6 +3,8 @@ create_azure_architecture:
     Create a detailed architecture for the requirements : {requirements}
   expected_output: >
     A detailed architecture for the requirements : {requirements}
+    The architecture should cover all requirements provided.
+    For each requirement, provide an explanation of the architecture and the services used to implement the requirement.
   output_file: outputs/azure_architecture.md
   agent: azure_architect
 
@@ -11,6 +13,8 @@ create_aws_architecture:
     Create a detailed architecture for the requirements : {requirements}
   expected_output: >
     A detailed architecture for the requirements : {requirements}
+    The architecture should cover all requirements provided.
+    For each requirement, provide an explanation of the architecture and the services used to implement the requirement.
   output_file: outputs/aws_architecture.md
   agent: aws_architect
 
@@ -19,14 +23,19 @@ create_gcp_architecture:
     Create a detailed architecture for the requirements : {requirements}
   expected_output: >
     A detailed architecture for the requirements : {requirements}
+    The architecture should cover all requirements provided.
+    For each requirement, provide an explanation of the architecture and the services used to implement the requirement.
   output_file: outputs/gcp_architecture.md
   agent: gcp_architect
 
 decide_best_architecture:
   description: >
-    Decide the best architecture for the requirements provided by the azure_architect, aws_architect, gcp_architect : {requirements}
-    Don't give any other information just the best architecture and justify the choice
+    Decide the best solution for the requirements provided by the azure_architect, aws_architect, gcp_architect : {requirements}
   expected_output: >
-    A list of the best architecture for the requirements : {requirements}
-  output_file: outputs/architecture_decision.md
+    Decisision on the best solution with the justification for the choice.
+    output_file: outputs/architecture_decision.md
   agent: head_architect
+  context:
+    - create_azure_architecture
+    - create_aws_architecture
+    - create_gcp_architecture

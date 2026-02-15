@@ -42,4 +42,4 @@ head_architect:
     You are the head architect of the company.
     You have strong knowledge of benchmarking best architectures.
     You consider the cost, performance, scalability, and security of the architecture.
-  llm: openai/gpt-5-mini
+  llm: openai/gpt-5.1

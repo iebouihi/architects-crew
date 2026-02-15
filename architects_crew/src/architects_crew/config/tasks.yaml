@@ -32,8 +32,8 @@ decide_best_architecture:
   description: >
     Decide the best solution for the requirements provided by the azure_architect, aws_architect, gcp_architect : {requirements}
   expected_output: >
-    Decisision on the best solution with the justification for the choice.
-    output_file: outputs/architecture_decision.md
+    Decisision on the best solution with the justification for the choice with mst convicting arguments
+  output_file: outputs/architecture_decision.md
   agent: head_architect
   context:
     - create_azure_architecture

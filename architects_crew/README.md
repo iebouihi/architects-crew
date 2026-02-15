@@ -10,20 +10,24 @@ ArchitectsCrew is a CrewAI crew that turns your system or architecture requireme
 
 You provide a single set of requirements (e.g. microservices, constraints, budget, tech stack). The crew outputs architecture documents for each cloud and a final recommendation in the `outputs/` folder.
 
-## Where to Change Requirements
+## Input: requirements
 
-Your requirements are defined in **`src/architects_crew/main.py`** in the **`REQUIREMENTS`** constant (a multi-line string). Edit that string and run the crew again; the same requirements are passed to all tasks and agents.
+Requirements are read from **`input/requirements.md`** at runtime. Edit that file with your business and technical requirements (tables, bullet points, or prose), then run the crew; the same content is passed to all tasks and agents.
 
-Example location in code:
+Example: use the provided `input/requirements.md` as a template (business requirements, technical requirements, budget, throughput, compliance, etc.). To change what the crew does (agents, tasks, flow), see **Customizing** below.
 
-```python
-REQUIREMENTS = """
-We have 2 micorservices Cart & Product.
-...
-"""
-```
+## Agents used
 
-To change what the crew does (agents, tasks, flow), see **Customizing** below.
+The crew uses four agents defined in `src/architects_crew/config/agents.yaml`:
+
+| Agent | Role | Purpose |
+|-------|------|--------|
+| **azure_architect** | Azure Senior Architect | Designs a detailed Azure architecture from the requirements (efficiency, security, scalability). Uses `openai/gpt-5-mini`. |
+| **aws_architect** | AWS Senior Architect | Designs a detailed AWS architecture from the requirements (efficiency, security, scalability). Uses `openai/gpt-5-mini`. |
+| **gcp_architect** | GCP Senior Architect | Designs a detailed GCP architecture from the requirements (efficiency, security, scalability). Uses `google/gemini-2.5-flash`. |
+| **head_architect** | Head Architect | Compares the three cloud designs and selects **one** best architecture, with justification based on cost, performance, scalability, and security. Uses `openai/gpt-5.1`. |
+
+The three cloud architects run in parallel; the head architect runs after them to produce the final recommendation.
 
 ## Installation
 
@@ -43,9 +47,17 @@ crewai install
 ```
 ### Customizing
 
-**Add your `OPENAI_API_KEY` into the `.env` file**
+**API keys (`.env`)**  
+Add the following to your `.env` file. Which keys you need depends on the LLMs set in `config/agents.yaml`:
 
-- **Change requirements** — Edit the `REQUIREMENTS` constant in `src/architects_crew/main.py` (see [Where to Change Requirements](#where-to-change-requirements) above).
+| Variable | Used by | Required for |
+|----------|--------|--------------|
+| `OPENAI_API_KEY` | Azure architect, AWS architect, Head architect | `openai/*` models (e.g. gpt-5-mini, gpt-5.1) |
+| `GEMINI_API_KEY` | GCP architect | `google/*` models (e.g. gemini-2.5-flash) |
+
+If you switch agents to other providers (Anthropic, Groq, etc.), add the corresponding API key (e.g. `ANTHROPIC_API_KEY`, `GROQ_API_KEY`) to `.env` as needed.
+
+- **Change requirements** — Edit `input/requirements.md` (see [Input: requirements](#input-requirements) above).
 - Modify `src/architects_crew/config/agents.yaml` to define your agents
 - Modify `src/architects_crew/config/tasks.yaml` to define your tasks
 - Modify `src/architects_crew/crew.py` to add your own logic, tools and specific args
@@ -61,7 +73,7 @@ $ crewai run
 
 This command initializes the architects-crew Crew, assembling the agents and assigning them tasks as defined in your configuration.
 
-With the default requirements in `main.py`, the crew produces Azure, AWS, and GCP architecture designs in `outputs/` and a final recommendation in `outputs/best_architectures.md`.
+With the requirements in `input/requirements.md`, the crew produces Azure, AWS, and GCP architecture designs in `outputs/` (`azure_architecture.md`, `aws_architecture.md`, `gcp_architecture.md`) and a final recommendation in `outputs/architecture_decision.md`.
 
 ## Understanding Your Crew
 

@@ -13,8 +13,7 @@ class ArchitectsCrew():
     @agent
     def azure_architect(self) -> Agent:
         return Agent(
-            config=self.agents_config['azure_architect'], # type: ignore[index]
-            verbose=True,
+            config=self.agents_config['azure_architect'],
             tracing=True
         )
 
@@ -22,7 +21,6 @@ class ArchitectsCrew():
     def aws_architect(self) -> Agent:
         return Agent(
             config=self.agents_config['aws_architect'], # type: ignore[index]
-            verbose=True,
             tracing=True
         )
 
@@ -30,7 +28,6 @@ class ArchitectsCrew():
     def gcp_architect(self) -> Agent:
         return Agent(
             config=self.agents_config['gcp_architect'], # type: ignore[index]
-            verbose=True,
             tracing=True
         )
 
@@ -38,7 +35,6 @@ class ArchitectsCrew():
     def head_architect(self) -> Agent:
         return Agent(
             config=self.agents_config['head_architect'], # type: ignore[index]
-            verbose=True,
             tracing=True
         )
 
@@ -72,14 +68,9 @@ class ArchitectsCrew():
     @crew
     def crew(self) -> Crew:
         """Creates the ArchitectsCrew crew"""
-        # To learn how to add knowledge sources to your crew, check out the documentation:
-        # https://docs.crewai.com/concepts/knowledge#what-is-knowledge
-
         return Crew(
             agents=self.agents, # Automatically created by the @agent decorator
             tasks=self.tasks, # Automatically created by the @task decorator
             process=Process.sequential,
-            verbose=True,
             tracing=True,
-            # process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
-        )
+            )
